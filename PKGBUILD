@@ -32,12 +32,14 @@ source=("http://openbox.org/dist/openbox/${_pkgname}-${pkgver}.tar.gz"
         "openbox-3.5.0-title-matching.patch"
         "openbox-3.5.0-which-2.20.patch"
         "openbox-3.6.2-rounded-corners.patch"
-        "openbox-3.6.2-fix-out-of-bounds.patch")
+        "openbox-3.6.2-fix-out-of-bounds.patch"
+	"uppercase.patch")
 md5sums=('b72794996c6a3ad94634727b95f9d204'
          '0a11d7149da210a31ef88f8a9c717711'
          '5be4554431e555084026631898f167aa'
          '3bec0508320653ab33214b3c52bb775e'
-         '4c28a1482a2aeb58415cec39f7f3a694')
+         '4c28a1482a2aeb58415cec39f7f3a694'
+         'f45609bee73d179de1b0aa41b2a04a1a')
 install="${pkgname}.install"
 
 prepare() {
@@ -51,6 +53,8 @@ prepare() {
 
     # https://github.com/danakj/openbox/pull/26
     patch -Np1 -i "${srcdir}/openbox-3.6.2-fix-out-of-bounds.patch"
+
+    patch --strip=1 -i "${srcdir}/uppercase.patch"
 
     sed -i 's|/usr/bin/env python|/usr/bin/env python2|' \
         data/autostart/openbox-xdg-autostart

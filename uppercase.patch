@@ -1,0 +1,25 @@
+diff --unified --recursive --text openbox-3.6.1/openbox/framerender.c openbox-3.6.1.changes/openbox/framerender.c
+--- openbox-3.6.1/openbox/framerender.c	2020-08-03 17:13:55.070153250 -0500
++++ openbox-3.6.1.changes/openbox/framerender.c	2020-08-03 17:19:55.722513721 -0500
+@@ -358,8 +358,20 @@
+ static void framerender_label(ObFrame *self, RrAppearance *a)
+ {
+     if (!self->label_on) return;
++
++    int i;
++    gchar *s;
++    
++    s = self->client->title;
++
++    for (i = 0; s[i]!='\0'; i++) {
++	if (s[i] >= 'a' && s[i] <= 'z') {
++	    s[i] = s[i] -32;
++	}
++    }
++
+     /* set the texture's text! */
+-    a->texture[0].data.text.string = self->client->title;
++    a->texture[0].data.text.string = s;
+     RrPaint(a, self->label, self->label_width, ob_rr_theme->label_height);
+ }
+ 
